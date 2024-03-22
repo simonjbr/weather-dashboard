@@ -3,7 +3,7 @@ const searchForm = $('#search-form');
 const textInput = $('#text-input');
 const submitBtn = $('#submit-btn');
 const historyContainer = $('#history-container');
-const resultsContainer = $('#results-container');
+const currentContainer = $('#current-container');
 
 // openweathermap api key
 const API_KEY = "227ca1573a3af857ae2b452b0dc9fe17";
@@ -12,7 +12,7 @@ const API_KEY = "227ca1573a3af857ae2b452b0dc9fe17";
 const printWeather = function (data) {
 
 	// clear existing results
-	resultsContainer.empty();
+	currentContainer.empty();
 
 	// CURRENT WEATHER CARD
 	// extract relevent data
@@ -44,7 +44,7 @@ const printWeather = function (data) {
 	currentCard.append(cardBody);
 
 	// append card to results-container
-	resultsContainer.append(currentCard);
+	currentContainer.append(currentCard);
 
 	// 5 DAY FORECAST
 
