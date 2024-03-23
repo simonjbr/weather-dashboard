@@ -213,3 +213,6 @@ searchForm.on('submit', handleFormSubmit);
 
 // event handler for showing history results
 historyContainer.on('click', '.btn-show-history', showHistoryResults);
+
+// event handler to print history on page load
+$(document).ready(printHistory);
