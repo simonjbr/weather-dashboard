@@ -9,6 +9,49 @@ const fiveDayContainer = $('#5-day-container');
 // openweathermap api key
 const API_KEY = "227ca1573a3af857ae2b452b0dc9fe17";
 
+// function to handle search history
+const handleHistory = function (cityName) {
+
+	// retrieve history from localStorage
+	let history = JSON.parse(localStorage.getItem('history'));
+
+	// if no history exists assign empty array
+	if (!history) {
+		history = [];
+	}
+	
+	// if cityName isn't present in current history push new cityName on history
+	if (!history.includes(cityName)) {
+		history.push(cityName);
+	}
+
+	// store updated history in localStorage
+	localStorage.setItem('history', JSON.stringify(history));
+	
+};
+
+// function to print history buttons
+const printHistory = function () {
+
+	// empty existing history elements
+	historyContainer.empty();
+
+	// retrieve history from localStorage
+	let history = JSON.parse(localStorage.getItem('history'));
+
+	// if no history exists stop function
+	if (!history) {
+		return;
+	}
+
+	// loop through history and create buttons for each element
+	for (const cityName of history) {
+		const historyBtn = $('<button>').addClass('btn btn-secondary m-1').text(cityName);
+		historyContainer.append(historyBtn);
+	}
+	
+};
+
 // function to print fetched data
 const printWeather = function (data) {
 
@@ -81,6 +124,12 @@ const printWeather = function (data) {
 		// append card to results-container
 		fiveDayContainer.append(currentCard);
 	}
+
+	// update history with new search
+	handleHistory(cityName);
+
+	// print history buttons
+	printHistory();
 
 };
 
