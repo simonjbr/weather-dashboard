@@ -46,10 +46,21 @@ const printHistory = function () {
 
 	// loop through history and create buttons for each element
 	for (const cityName of history) {
-		const historyBtn = $('<button>').addClass('btn btn-secondary m-1').text(cityName);
+		const historyBtn = $('<button>').addClass('btn btn-secondary m-1 btn-show-history').attr('data-city-name', cityName).text(cityName);
 		historyContainer.append(historyBtn);
 	}
 	
+};
+
+// function to show history results
+const showHistoryResults = function (event) {
+
+	// get cityName from event.target
+	const cityName = $(event.target).attr('data-city-name');
+
+	// run fetch for cityName
+	getWeather(cityName);
+
 };
 
 // function to print fetched data
@@ -192,8 +203,13 @@ const handleFormSubmit = function (event) {
 
 	getWeather(encodedSearchString);
 
+	// clear form input field
+	searchForm[0].reset();
 
 };
 
 // event handler for submit-btn
 searchForm.on('submit', handleFormSubmit);
+
+// event handler for showing history results
+historyContainer.on('click', '.btn-show-history', showHistoryResults);
