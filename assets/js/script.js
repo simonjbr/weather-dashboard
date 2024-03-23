@@ -148,7 +148,7 @@ const printWeather = function (data) {
 const getWeather = function (cityName) {
 
 	// geocoding request url
-	const requestLonLatUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
+	const requestLonLatUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
 
 	// async lon lat fetch request function
 	const fetchLonLat = async function () {
