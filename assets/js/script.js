@@ -4,6 +4,7 @@ const textInput = $('#text-input');
 const submitBtn = $('#submit-btn');
 const historyContainer = $('#history-container');
 const currentContainer = $('#current-container');
+const fiveDayContainer = $('#5-day-container');
 
 // openweathermap api key
 const API_KEY = "227ca1573a3af857ae2b452b0dc9fe17";
@@ -13,6 +14,7 @@ const printWeather = function (data) {
 
 	// clear existing results
 	currentContainer.empty();
+	fiveDayContainer.empty();
 
 	// CURRENT WEATHER CARD
 	// extract relevent data
@@ -31,7 +33,7 @@ const printWeather = function (data) {
 	console.log('wind', wind);
 
 	// create elements for each portion of the card
-	const currentCard = $('<div>').addClass('card border border-primary');
+	const currentCard = $('<div>').addClass('card border border-2 border-dark bg-light m-1');
 	const cardBody = $('<div>').addClass('card-body');
 	const cardTitle = $('<h3>').addClass('card-title h3').text(`${cityName} ${date}`);
 	const weatherIcon = $('<img>').attr('src', iconUrl);
@@ -47,6 +49,38 @@ const printWeather = function (data) {
 	currentContainer.append(currentCard);
 
 	// 5 DAY FORECAST
+	// loop to cycle through every 8 data.list elements to get 24hr increments
+	for (let i = 7; i < data.list.length; i += 8) {
+
+		// extract relevent data
+		const date = dayjs(data.list[i].dt * 1000).format('DD/MM/YYYY');
+		console.log('date', date);
+		const icon = data.list[i].weather[0].icon;
+		console.log('icon', icon);
+		const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+		const temp = data.list[i].main.temp;
+		console.log('temp', temp);
+		const humidity = data.list[i].main.humidity;
+		console.log('humidity', humidity);
+		const wind = data.list[i].wind.speed;
+		console.log('wind', wind);
+
+		// create elements for each portion of the card
+		const currentCard = $('<div>').addClass('card bg-dark col text-light');
+		const cardBody = $('<div>').addClass('card-body');
+		const cardTitle = $('<p>').addClass('card-title fw-bold').text(`${date}`);
+		const weatherIcon = $('<img>').attr('src', iconUrl);
+		const cardTemp = $('<p>').addClass('card-text').text(`Temp: ${temp}°C`);
+		const cardWind = $('<p>').addClass('card-text').text(`Wind: ${wind} KPH`);
+		const cardHumidity = $('<p>').addClass('card-text').text(`Humidity: ${humidity} %`);
+
+		// construct card
+		cardBody.append(cardTitle, weatherIcon, cardTemp, cardWind, cardHumidity);
+		currentCard.append(cardBody);
+
+		// append card to results-container
+		fiveDayContainer.append(currentCard);
+	}
 
 };
 
