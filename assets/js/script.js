@@ -120,7 +120,7 @@ const printWeather = function (data) {
 		console.log('wind', wind);
 
 		// create elements for each portion of the card
-		const currentCard = $('<div>').addClass('card bg-dark col text-light');
+		const currentCard = $('<div>').addClass('card bg-dark col-6 col-md text-light');
 		const cardBody = $('<div>').addClass('card-body');
 		const cardTitle = $('<p>').addClass('card-title fw-bold').text(`${date}`);
 		const weatherIcon = $('<img>').attr('src', iconUrl);
