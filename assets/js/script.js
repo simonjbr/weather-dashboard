@@ -56,10 +56,7 @@ const printHistory = function () {
 const showHistoryResults = function (event) {
 
 	// get cityName from event.target
-	// const cityName = $(event.target).attr('data-city-name');
-	const cityName = event.target.getAttribute('data-city-name');
-
-	console.log('showHistoryResults: cityName', cityName);
+	const cityName = $(event.target).attr('data-city-name');
 
 	// run fetch for cityName
 	getWeather(cityName);
@@ -76,18 +73,12 @@ const printWeather = function (data) {
 	// CURRENT WEATHER CARD
 	// extract relevent data
 	const cityName = data.city.name;
-	console.log('cityName', cityName);
 	const date = dayjs(data.list[0].dt * 1000).format('DD/MM/YYYY');
-	console.log('date', date);
 	const icon = data.list[0].weather[0].icon;
-	console.log('icon', icon);
 	const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 	const temp = data.list[0].main.temp;
-	console.log('temp', temp);
 	const humidity = data.list[0].main.humidity;
-	console.log('humidity', humidity);
 	const wind = data.list[0].wind.speed;
-	console.log('wind', wind);
 
 	// create elements for each portion of the card
 	const currentCard = $('<div>').addClass('card border border-2 border-dark bg-light m-1');
@@ -111,16 +102,11 @@ const printWeather = function (data) {
 
 		// extract relevent data
 		const date = dayjs(data.list[i].dt * 1000).format('DD/MM/YYYY');
-		console.log('date', date);
 		const icon = data.list[i].weather[0].icon;
-		console.log('icon', icon);
 		const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 		const temp = data.list[i].main.temp;
-		console.log('temp', temp);
 		const humidity = data.list[i].main.humidity;
-		console.log('humidity', humidity);
 		const wind = data.list[i].wind.speed;
-		console.log('wind', wind);
 
 		// create elements for each portion of the card
 		const currentCard = $('<div>').addClass('card bg-dark col-6 col-md text-light');
@@ -150,12 +136,8 @@ const printWeather = function (data) {
 // function to convert city name into lon/lat
 const getWeather = function (cityName) {
 
-	console.log('cityName:', cityName);
-
 	// geocoding request url
 	const requestLonLatUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
-
-	console.log('requestLonLatUrl', requestLonLatUrl);
 
 	// async lon lat fetch request function
 	const fetchLonLat = async function () {
@@ -171,13 +153,8 @@ const getWeather = function (cityName) {
 			const lon = data[0].lon;
 			const lat = data[0].lat;
 
-			console.log(data);
-			console.log(lon, lat);
-
 			// weather request url
 			const requestWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&cnt=40`;
-
-			console.log(requestWeatherUrl);
 
 			// async weather fetch request function
 			const fetchWeather = async function () {
@@ -189,7 +166,7 @@ const getWeather = function (cityName) {
 
 			fetchWeather()
 				.then(data => {
-					console.log(data);
+					// print results to page
 					printWeather(data);
 				});
 		});
@@ -202,8 +179,6 @@ const handleFormSubmit = function (event) {
 
 	// prevent default submit behaviour
 	event.preventDefault();
-
-	console.log('textInput:', textInput.val());
 
 	// encode search string for url query
 	const encodedSearchString = encodeURI(textInput.val());
