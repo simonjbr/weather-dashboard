@@ -56,7 +56,10 @@ const printHistory = function () {
 const showHistoryResults = function (event) {
 
 	// get cityName from event.target
-	const cityName = $(event.target).attr('data-city-name');
+	// const cityName = $(event.target).attr('data-city-name');
+	const cityName = event.target.getAttribute('data-city-name');
+
+	console.log('showHistoryResults: cityName', cityName);
 
 	// run fetch for cityName
 	getWeather(cityName);
@@ -147,8 +150,12 @@ const printWeather = function (data) {
 // function to convert city name into lon/lat
 const getWeather = function (cityName) {
 
+	console.log('cityName:', cityName);
+
 	// geocoding request url
 	const requestLonLatUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
+
+	console.log('requestLonLatUrl', requestLonLatUrl);
 
 	// async lon lat fetch request function
 	const fetchLonLat = async function () {
